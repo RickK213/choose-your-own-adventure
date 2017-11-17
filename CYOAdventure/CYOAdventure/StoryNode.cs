@@ -16,6 +16,7 @@ namespace CYOAdventure
         public int nextNodeA;
         public int nextNodeB;
         public bool isSolution;
+        public int gameOverNode = 999;
 
 
         //constructor
@@ -51,12 +52,12 @@ namespace CYOAdventure
                     case "b":
                         return nextNodeB;
                     default:
-                        return 999;
+                        return gameOverNode;
                 }
             }
             else
             {
-                return 999;
+                return gameOverNode;
             }
         }
     }

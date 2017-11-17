@@ -10,8 +10,9 @@ namespace CYOAdventure
     {
         //member variables
 
-        public bool gameOver = false;
+        public bool isGameOver = false;
         public int currentNode = 1;
+        public int gameOverNode = 999;
 
         public List<StoryNode> CreateStoryNodes()
         {
@@ -57,9 +58,9 @@ namespace CYOAdventure
             );
 
             StoryNode node5 = new StoryNode(
-                "\"I noticed Andrew isn't here, what's up with that ?\" you say. \"It's not my job to babysit Andrew.\" Alicia replies in a nervous tone. \"That guy takes a lot of risks...maybe the Monster Energy Drinks finally caught up with him.\"",
+                "\"I noticed Andrew isn't here, what's up with that?\" you ask. \"It's not my job to babysit Andrew.\" Alicia replies in a nervous tone. \"That guy takes a lot of risks...maybe the Monster Energy Drinks finally caught up with him.\"",
                 "Do you say:",
-                "\"That's a reach, Alicia. Is there something you're not telling me ?\"",
+                "\"That's a reach, Alicia. Is there something you're not telling me?\"",
                 "\"I'm sure you're right. Have you seen Britt this morning? I've got some questions about her Capstone.\"",
                 10,
                 11,
@@ -97,9 +98,9 @@ namespace CYOAdventure
             );
 
             StoryNode node9 = new StoryNode(
-                "As you stroll over to the coffee pot for some of the sweet black nectar that Zach brewed up, Britt walks in the door looking white as a ghost.\n\n\"Is Alicia here?\" she asks. \"Yeah, she's right over there. She's not in a great mood though.\n\nWith an air of mystery she asks \"Are you feeling brave today?\"",
+                "As you stroll over to the coffee pot for some of the sweet black nectar that Zach brewed up, Britt walks in the door looking white as a ghost.\n\n\"Is Alicia here?\" she asks. \"Yeah, she's right over there. She's not in a great mood though.\" you reply.\n\nWith an air of mystery she asks \"Are you feeling brave today?\"",
                 "Do you say:",
-                "\"I guess I'm feeling brave...what's up ?\"",
+                "\"I guess I'm feeling brave...what's up?\"",
                 "\"Not really. People be acting crazy up in this piece today.\"",
                 14,
                 15,
@@ -137,9 +138,9 @@ namespace CYOAdventure
             );
 
             StoryNode node13 = new StoryNode(
-                "You feel pretty good about yourself as you continue busting out the Javascript code at record pace.\n\nA few minutes later, Britt walks over with distressed look on her face.\n\n\"I have information you will not believe. Are you feeling brave today?\"",
+                "You feel pretty good about yourself as you continue busting out the Javascript code at record pace.\n\nA few minutes later, Britt walks over with a distressed look on her face and says \"I have information you will not believe. Are you feeling brave today?\"",
                 "Do you say:",
-                "\"Sure I'm feeling brave you weirdo..what's up?\"",
+                "\"Sure I'm feeling brave, you weirdo...what's up?\"",
                 "\"People are being too weird today. I just want to write code.\"",
                 14,
                 15,
@@ -177,7 +178,7 @@ namespace CYOAdventure
             );
 
             StoryNode node17 = new StoryNode(
-                "Calling the police seemed like such a reasonable thing to do.\n\nYou pull your super sweet iPhone out of your pocket and dial \"9-1-\"\n\nBefore you can hit the last \"1,\" you hear \"Do it now, Mike.\"\n\nYou turn around and see Alicia with a wild look in her eye as she puts something small and thin in Mike's hand.\n\nMike turns toward you with a pained look in his eye and the small, thin thing flashes below your chin.\n\nAs the pool of blood grows around you, you realize that Mike has been Alicia's minion all along and, at her direction, he has just sliced your throat with a Pokémon™ card.\n\n\"Charizard was my demise,\" you think, as the world gets cold and dark. You are dead.\n\nYOU HAVE LOST THE GAME.",
+                "Calling the police seemed like such a reasonable thing to do.\n\nYou pull your super sweet iPhone out of your pocket and dial \"9-1-\"\n\nBefore you can hit the last \"1,\" you hear \"Do it now, Mike.\"\n\nYou turn around and see Alicia with a wild look in her eye as she puts something small and thin in Mike's hand.\n\nMike turns toward you with a pained look in his eye and the small, thin thing flashes below your chin.\n\nAs the pool of blood grows around you, you realize that Mike has been Alicia's minion all along and, at her direction, he has just sliced your throat with a Pokémon card.\n\n\"Charizard was my demise,\" you think, as the world gets cold and dark. You are dead.\n\nYOU HAVE LOST THE GAME.",
                 "",
                 "",
                 "",
@@ -207,6 +208,28 @@ namespace CYOAdventure
             return storyNodes;
         }
 
+        public void RestartGame()
+        {
+            Console.WriteLine("\nWould you like to play again? Press 'y' or 'n'");
+            string userSelection = Console.ReadKey().KeyChar.ToString();
+            if (!(userSelection == "y" || userSelection == "n"))
+            {
+                Console.Clear();
+                RestartGame();
+            }
+            switch (userSelection)
+            {
+                case "y":
+                    Console.Clear();
+                    isGameOver = false;
+                    currentNode = 1;
+                    Start();
+                    break;
+                case "n":
+                    return;
+            }
+        }
+
         public void Start()
         {
             //Introduction. User presses any key to start
@@ -216,12 +239,12 @@ namespace CYOAdventure
 
             List<StoryNode> storyNodes = CreateStoryNodes();
 
-            while (!gameOver)
+            while (!isGameOver)
             {
                 int nextNode = storyNodes[currentNode - 1].Start();
-                if (nextNode == 999)
+                if (nextNode == gameOverNode)
                 {
-                    gameOver = true;
+                    isGameOver = true;
                 }
                 else
                 {
@@ -229,7 +252,7 @@ namespace CYOAdventure
                 }  
             }
 
-            Console.WriteLine("\n\nWould you like to play again? Press 'y' or 'n'");
+            RestartGame();
         }
     }
 }

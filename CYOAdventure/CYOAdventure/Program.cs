@@ -12,7 +12,6 @@ namespace CYOAdventure
         {
             Game myGame = new Game();
             myGame.Start();
-            Console.ReadKey();
         }
     }
 }

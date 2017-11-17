@@ -9,14 +9,14 @@ namespace CYOAdventure
     class StoryNode
     {
         //member variables
-        public string storyBlock;
-        public string question;
-        public string optionA;
-        public string optionB;
-        public int nextNodeA;
-        public int nextNodeB;
-        public bool isSolution;
-        public int gameOverNode = 999;
+        private string storyBlock;
+        private string question;
+        private string optionA;
+        private string optionB;
+        private int nextNodeA;
+        private int nextNodeB;
+        private bool isSolution;
+        private int gameOverNode = 999;
 
 
         //constructor
@@ -33,17 +33,26 @@ namespace CYOAdventure
 
 
         //member methods
-        public int Start()
+        public void DisplayStoryNode()
         {
             Console.Clear();
             Console.WriteLine(storyBlock + "\n");
-            if (!isSolution) {
+            if (!isSolution)
+            {
                 Console.WriteLine(question + "\n");
                 Console.WriteLine("A) " + optionA + "\n");
                 Console.WriteLine("B) " + optionB + "\n");
+            }
+        }
+
+        public int GetNextStoryNode()
+        {
+            if (!isSolution)
+            {
                 string userSelection = Console.ReadKey().KeyChar.ToString();
-                if ( !(userSelection =="a" || userSelection=="b") ) {
-                    Start();
+                if (!(userSelection == "a" || userSelection == "b"))
+                {
+                    DisplayStoryNode();
                 }
                 switch (userSelection)
                 {
@@ -60,5 +69,6 @@ namespace CYOAdventure
                 return gameOverNode;
             }
         }
+
     }
 }
